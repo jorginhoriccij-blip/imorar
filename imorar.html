@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>IMORAR • imóveis em sjc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f1;--navy:#1B2B4B;--terra:#C96A3A;--muted:#77756f;--border:#e8e2d8;--shadow:0 12px 40px rgba(0,0,0,.08)
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:#1f1f1f;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none}
+.container{max-width:1180px;margin:auto;padding:0 24px}
+.section{padding:90px 0}
+.btn{border:none;border-radius:16px;padding:14px 24px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--terra);color:#fff}
+.btn-outline{background:#fff;border:1px solid var(--border);color:var(--navy)}
+
+nav{position:fixed;top:0;left:0;right:0;height:74px;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:space-between;padding:0 42px;z-index:99;border-bottom:1px solid rgba(0,0,0,.05)}
+.logo{display:flex;flex-direction:column;line-height:1}
+.logo-main{font:700 34px 'Fraunces',serif;color:var(--navy);display:flex;align-items:flex-end}
+.logo-main span{position:relative;display:inline-block;margin-right:3px}
+.roof{position:absolute;top:-10px;left:-3px;width:28px;height:28px;border-top:6px solid var(--terra);border-left:6px solid var(--terra);transform:rotate(45deg);border-radius:3px}
+.chimney{position:absolute;top:-15px;right:-8px;width:6px;height:14px;background:var(--terra);border-radius:2px}
+.logo-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(27,43,75,.58);margin-top:7px}
+
+.hero{height:100vh;position:relative;display:grid;place-items:center;text-align:center;color:#fff;overflow:hidden}
+.hero img,.overlay{position:absolute;inset:0;width:100%;height:100%}
+.hero img{object-fit:cover}
+.overlay{background:linear-gradient(135deg,rgba(13,22,42,.84),rgba(13,22,42,.52))}
+.hero-content{position:relative;z-index:2;max-width:920px;padding:0 24px}
+.tag{display:inline-block;padding:8px 18px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font:700 clamp(48px,7vw,88px) 'Fraunces',serif;line-height:1.02;margin-bottom:22px}
+.hero h1 span{color:#f0a06c;font-style:italic}
+.hero p{max-width:720px;margin:0 auto 34px;line-height:1.8;color:rgba(255,255,255,.75)}
+.search{background:#fff;padding:14px;border-radius:26px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.22)}
+.search input,.search select{padding:16px;border:none;background:#f3f3f3;border-radius:16px;outline:none;font-family:inherit}
+.search button{border:none;background:var(--terra);color:#fff;padding:0 28px;border-radius:16px;font-weight:600;cursor:pointer;font-family:inherit}
+.stats{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;margin-top:48px}
+.stats strong{display:block;font:700 38px 'Fraunces',serif}
+.stats span{font-size:13px;color:rgba(255,255,255,.55)}
+
+.head{text-align:center;margin-bottom:38px}
+.head h2{font:700 48px 'Fraunces',serif;color:var(--navy)}
+.eyebrow{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+.no-results{text-align:center;padding:60px 24px;color:var(--muted);font-size:16px;display:none}
+.no-results.visible{display:block}
+
+.card{background:#fff;border-radius:28px;box-shadow:var(--shadow);position:relative}
+.card-image{height:240px;position:relative;overflow:hidden;border-radius:28px 28px 0 0}
+.card-image img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.card:hover .card-image img{transform:scale(1.05)}
+.badge{position:absolute;top:16px;left:16px;background:var(--terra);color:#fff;padding:7px 12px;border-radius:999px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.card-body{padding:24px}
+.card-type{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+.card h3{font:700 28px 'Fraunces',serif;color:var(--navy);margin-bottom:10px}
+.location{color:var(--muted);margin-bottom:18px}
+.features{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.feature{background:#f3f1ed;padding:8px 12px;border-radius:12px;font-size:13px}
+.card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.price{font:700 32px 'Fraunces',serif;color:var(--navy)}
+.actions{display:flex;gap:10px}
+.delete{background:#fff;color:#b94a48;border:1px solid rgba(185,74,72,.18);padding:14px 16px;border-radius:16px;font-weight:600;cursor:pointer;font-family:inherit}
+.whatsapp{display:inline-flex;align-items:center;justify-content:center;background:#25D366;color:#fff;padding:14px 18px;border-radius:16px;font-weight:600}
+
+.form{background:#fff;padding:36px;border-radius:32px;box-shadow:var(--shadow)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+input,select,textarea{width:100%;padding:18px;border-radius:18px;border:1px solid var(--border);font:inherit;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--terra)}
+textarea{min-height:160px;resize:vertical;margin-bottom:18px}
+.upload{border:2px dashed var(--terra);border-radius:24px;padding:54px;text-align:center;background:#faf6f2;margin-bottom:24px;cursor:pointer;transition:background .2s}
+.upload:hover{background:#f5ede4}
+.upload input[type=file]{display:none}
+.upload-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;justify-content:center}
+.upload-preview img{width:80px;height:60px;object-fit:cover;border-radius:10px}
+.form-success{display:none;background:#e8f5e9;color:#2e7d32;border-radius:18px;padding:20px 24px;margin-top:18px;font-weight:600;text-align:center}
+.form-success.visible{display:block}
+
+.pricing .card{padding:34px}
+.popular{border:2px solid var(--terra)}
+.popular-tag{position:absolute;top:22px;right:-32px;background:var(--terra);color:#fff;padding:8px 44px;font-size:11px;transform:rotate(45deg);font-weight:700;letter-spacing:1px;pointer-events:none;z-index:2}
+
+.footer{background:var(--navy);padding:70px 24px;text-align:center;color:rgba(255,255,255,.45)}
+
+.float-brand,.support{position:fixed;bottom:18px;z-index:999;border-radius:999px;backdrop-filter:blur(12px)}
+.float-brand{left:18px;background:rgba(27,43,75,.92);padding:12px 18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+.support{right:18px;display:flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:14px 18px;box-shadow:0 18px 40px rgba(37,211,102,.28)}
+
+.toast{position:fixed;bottom:88px;right:18px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:16px;font-size:14px;font-weight:600;z-index:9999;opacity:0;transform:translateY(12px);transition:.3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9998;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:32px;padding:42px;max-width:440px;width:calc(100% - 48px);box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative}
+.modal h3{font:700 32px 'Fraunces',serif;color:var(--navy);margin-bottom:20px}
+.modal-close{position:absolute;top:18px;right:22px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
+.modal-tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:24px}
+.modal-tab{flex:1;padding:12px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;font:600 14px 'Plus Jakarta Sans',sans-serif;color:var(--muted);transition:.2s}
+.modal-tab.active{color:var(--navy);border-bottom-color:var(--terra)}
+.modal input{margin-bottom:14px}
+.btn-google{width:100%;background:#fff;border:1.5px solid var(--border);color:#1f1f1f;display:flex;align-items:center;justify-content:center;gap:10px;padding:15px;border-radius:16px;font:600 14px 'Plus Jakarta Sans',sans-serif;cursor:pointer;margin-bottom:16px;transition:.2s}
+.btn-google:hover{background:#f5f5f5}
+.divider{display:flex;align-items:center;gap:10px;margin-bottom:16px;color:var(--muted);font-size:12px}
+.divider:before,.divider:after{content:'';flex:1;height:1px;background:var(--border)}
+.modal-note{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
+
+@media(max-width:820px){
+  nav{padding:0 18px}
+  .search{grid-template-columns:1fr}
+  .search button{padding:16px}
+  .form-grid{grid-template-columns:1fr}
+  .hero h1{font-size:52px}
+  .head h2{font-size:38px}
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- MODAL AUTH -->
+<div class="modal-overlay" id="modalAuth">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Acesse o IMORAR</h3>
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-tab="login" onclick="switchTab('login')">Entrar</button>
+      <button class="modal-tab" data-tab="cadastro" onclick="switchTab('cadastro')">Criar conta</button>
+    </div>
+    <button class="btn-google" onclick="loginGoogle()">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+      Continuar com Google
+    </button>
+    <div class="divider">ou</div>
+    <div id="tabLogin">
+      <input type="email" id="loginEmail" placeholder="Seu e-mail">
+      <input type="password" id="loginPassword" placeholder="Sua senha" onkeydown="if(event.key==='Enter')fazerLogin()">
+      <button class="btn btn-primary" style="width:100%" onclick="fazerLogin()">Entrar na conta</button>
+    </div>
+    <div id="tabCadastro" style="display:none">
+      <input type="text" id="cadNome" placeholder="Seu nome">
+      <input type="email" id="cadEmail" placeholder="Seu e-mail">
+      <input type="tel" id="cadWhatsApp" placeholder="WhatsApp com DDD (ex: 5512999999999)">
+      <input type="password" id="cadSenha" placeholder="Criar senha (mín. 6 caracteres)" onkeydown="if(event.key==='Enter')cadastrar()">
+      <button class="btn btn-primary" style="width:100%" onclick="cadastrar()">Criar conta grátis</button>
+      <div class="modal-note">3 dias grátis • sem cartão de crédito</div>
+    </div>
+  </div>
+</div>
+
+<div class="float-brand">
+  <div class="logo-main" style="font-size:22px;color:#fff"><span>I<i class="roof"></i><i class="chimney"></i></span>MORAR</div>
+</div>
+
+<nav>
+  <div class="logo">
+    <div class="logo-main"><span>I<i class="roof"></i><i class="chimney"></i></span>MORAR</div>
+    <div class="logo-sub">imóveis em sjc</div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <button class="btn btn-outline" id="btnEntrar" onclick="openModal()">Entrar</button>
+    <button class="btn btn-primary" onclick="scrollToForm()">Anunciar imóvel</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=1600&auto=format&fit=crop" alt="Imóveis SJC">
+  <div class="overlay"></div>
+  <div class="hero-content">
+    <div class="tag">Marketplace imobiliário premium</div>
+    <h1>Encontre o imóvel perfeito em <span>SJC.</span></h1>
+    <p>Casas, apartamentos e imóveis premium anunciados diretamente por proprietários e corretores da região.</p>
+    <div class="search">
+      <input id="searchInput" placeholder="Buscar bairro ou título" oninput="filtrarImoveis()">
+      <select id="searchTipo" onchange="filtrarImoveis()">
+        <option value="">Tipo do imóvel</option>
+        <option value="Casa">Casa</option>
+        <option value="Apartamento">Apartamento</option>
+        <option value="Comercial">Comercial</option>
+      </select>
+      <button onclick="filtrarImoveis()">Buscar</button>
+    </div>
+    <div class="stats">
+      <div><strong id="statImoveis">—</strong><span>Imóveis publicados</span></div>
+      <div><strong id="statCorretores">—</strong><span>Corretores cadastrados</span></div>
+      <div><strong id="statBairros">—</strong><span>Bairros em destaque</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="head"><div class="eyebrow">Marketplace</div><h2>Imóveis em destaque</h2></div>
+    <div class="grid" id="gridImoveis"><p style="color:var(--muted);text-align:center;padding:40px;grid-column:1/-1">Carregando imóveis...</p></div>
+    <div class="no-results" id="noResults">Nenhum imóvel encontrado para essa busca.</div>
+  </div>
+</section>
+
+<section class="section" id="secaoForm">
+  <div class="container">
+    <div class="head"><div class="eyebrow">Cadastro</div><h2>Publicar imóvel</h2></div>
+    <div class="form">
+      <div class="form-grid">
+        <input id="fTitulo" placeholder="Título do imóvel">
+        <select id="fTipo"><option value="">Tipo do imóvel</option><option>Casa</option><option>Apartamento</option><option>Comercial</option></select>
+      </div>
+      <div class="form-grid">
+        <input id="fBairro" placeholder="Cidade / Bairro">
+        <input id="fPreco" placeholder="Preço (ex: 1490000)" type="number">
+      </div>
+      <div class="form-grid">
+        <input id="fQuartos" placeholder="Quartos" type="number">
+        <input id="fArea" placeholder="Área (m²)" type="number">
+      </div>
+      <div class="form-grid">
+        <input id="fWhatsApp" placeholder="Seu WhatsApp com DDD (ex: 5512999999999)" type="tel">
+        <input id="fVagas" placeholder="Vagas de garagem" type="number">
+      </div>
+      <textarea id="fDesc" placeholder="Descrição do imóvel"></textarea>
+      <div class="upload" onclick="document.getElementById('uploadFotos').click()">
+        <h4>Arraste ou clique para adicionar fotos</h4>
+        <p style="color:var(--muted);margin-top:6px">PNG, JPG ou WEBP • até 5 imagens</p>
+        <div class="upload-preview" id="uploadPreview"></div>
+        <input type="file" id="uploadFotos" multiple accept="image/*" onchange="previewFotos(event)">
+      </div>
+      <button class="btn btn-primary" onclick="publicarImovel()">Publicar imóvel</button>
+      <div class="form-success" id="formSuccess">✅ Imóvel publicado com sucesso! Aparece na listagem acima.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section pricing" style="padding-top:0">
+  <div class="container">
+    <div class="head"><div class="eyebrow">Planos</div><h2>Escolha seu plano</h2></div>
+    <div class="grid">
+      <div class="card" style="padding:34px">
+        <div class="card-type">Starter</div>
+        <h3 style="font:700 26px 'Fraunces',serif;color:var(--navy);margin:10px 0">Teste grátis</h3>
+        <div style="margin:14px 0">
+          <div class="price">R$ 0</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">por 3 dias • depois R$ 39/mês</div>
+        </div>
+        <div class="features" style="margin-bottom:8px">
+          <div class="feature">1 imóvel ativo</div>
+          <div class="feature">3 dias grátis</div>
+          <div class="feature">Renovação R$ 39/mês</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6">Ideal pra testar a plataforma. Após o período grátis, renove por R$ 39/mês pra manter o anúncio no ar.</p>
+        <button class="btn btn-outline" style="width:100%;margin-bottom:10px" onclick="scrollToForm()">Começar grátis — 3 dias</button>
+        <button class="btn btn-primary" style="width:100%" onclick="abrirPagamento('starter')">Já quero assinar — R$ 39/mês</button>
+      </div>
+      <div class="card popular" style="padding:34px">
+        <div class="popular-tag">POPULAR</div>
+        <div class="card-type">PRO</div>
+        <h3 style="font:700 26px 'Fraunces',serif;color:var(--navy);margin:10px 0">Corretor autônomo</h3>
+        <div style="margin:14px 0">
+          <div class="price">R$ 69<span style="font-size:16px;font-weight:500">/mês</span></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">cobrado mensalmente</div>
+        </div>
+        <div class="features" style="margin-bottom:8px">
+          <div class="feature">3 imóveis ativos</div>
+          <div class="feature">Leads via WhatsApp</div>
+          <div class="feature">Destaque na busca</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6">Perfeito pra corretores que querem anunciar de forma profissional sem pagar caro.</p>
+        <button class="btn btn-primary" style="width:100%" onclick="abrirPagamento('pro')">Assinar PRO — R$ 69/mês</button>
+      </div>
+      <div class="card" style="padding:34px">
+        <div class="card-type">Master</div>
+        <h3 style="font:700 26px 'Fraunces',serif;color:var(--navy);margin:10px 0">Imobiliária</h3>
+        <div style="margin:14px 0">
+          <div class="price">R$ 129<span style="font-size:16px;font-weight:500">/mês</span></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">cobrado mensalmente</div>
+        </div>
+        <div class="features" style="margin-bottom:8px">
+          <div class="feature">6 imóveis ativos</div>
+          <div class="feature">Leads via WhatsApp</div>
+          <div class="feature">Suporte prioritário</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6">Para imobiliárias e corretores com carteira ampla que precisam de mais anúncios simultâneos.</p>
+        <button class="btn btn-outline" style="width:100%" onclick="abrirPagamento('master')">Assinar Master — R$ 129/mês</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="logo" style="align-items:center">
+    <div class="logo-main" style="color:#fff"><span>I<i class="roof"></i><i class="chimney"></i></span>MORAR</div>
+    <div class="logo-sub" style="color:rgba(255,255,255,.6)">imóveis em sjc</div>
+  </div>
+  <p style="margin-top:18px">Marketplace imobiliário premium • São José dos Campos</p>
+</footer>
+
+<a class="support" href="https://api.whatsapp.com/send?phone=5512992442636&text=Olá%20vim%20pelo%20IMORAR" target="_blank">
+  <div style="font-size:22px">💬</div>
+  <div><small style="display:block;opacity:.8">Precisa de ajuda?</small><strong>Falar com atendimento</strong></div>
+</a>
+
+<!-- Firebase v9 compat -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
+
+<script>
+// ▸ Firebase — projeto imobconnect-eecb2
+const FIREBASE_CONFIG = {
+  apiKey:        "AIzaSyAPRe8ZR7UZxpF80pq44CSc6ViFl3_baH8",
+  authDomain:    "imobconnect-eecb2.firebaseapp.com",
+  projectId:     "imobconnect-eecb2",
+  storageBucket: "imobconnect-eecb2.firebasestorage.app"
+}
+const WHATSAPP = '5512992442636'
+const LINKS_PAGAMENTO = {
+  starter: 'https://link.infinitepay.io/jorge-ricci-junior/VC1D-0DyIHo7TxT-39,00',
+  pro:     'https://link.infinitepay.io/jorge-ricci-junior/VC1D-5zg9i9lrwk-69,00',
+  master:  'https://link.infinitepay.io/jorge-ricci-junior/VC1D-LeIeCTThDC-129,00'
+}
+
+// ▸ Planos e quotas
+const QUOTAS      = { starter: 1, pro: 3, master: 6 }
+const NOMES_PLANO = { starter: 'Starter', pro: 'PRO', master: 'Master' }
+
+// ▸ INIT
+firebase.initializeApp(FIREBASE_CONFIG)
+const auth           = firebase.auth()
+const db             = firebase.firestore()
+const storage        = firebase.storage()
+const googleProvider = new firebase.auth.GoogleAuthProvider()
+
+// ▸ State
+let currentUser  = null
+let userData     = null
+let imoveis      = []
+let fotosFiles   = []
+let unsubImoveis = null
+
+// ▸ AUTH STATE — ponto central de sessão
+auth.onAuthStateChanged(async user => {
+  currentUser = user
+  if (user) {
+    await carregarUsuario(user.uid, user.email, user.displayName)
+    atualizarNavLogado()
+  } else {
+    userData = null
+    const btn = document.getElementById('btnEntrar')
+    btn.textContent = 'Entrar'
+    btn.onclick = openModal
+  }
+  ouvirImoveis()
+})
+
+// ▸ CARREGAR / CRIAR DOC DO USUÁRIO
+async function carregarUsuario(uid, email, displayName) {
+  const ref  = db.collection('users').doc(uid)
+  const snap = await ref.get()
+  if (!snap.exists) {
+    const exp = new Date()
+    exp.setDate(exp.getDate() + 3)
+    await ref.set({
+      uid, email,
+      nome: displayName || email.split('@')[0],
+      plan: 'starter',
+      limiteImoveis: 1,
+      planoAtivo: true,
+      whatsapp: '',
+      dataExpiracao: firebase.firestore.Timestamp.fromDate(exp),
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    })
+  }
+  userData = (await ref.get()).data()
+  // compatibilidade com contas antigas (free→starter, premium→master)
+  if (userData.plan === 'free')    userData.plan = 'starter'
+  if (userData.plan === 'premium') userData.plan = 'master'
+  if (userData.planoAtivo === undefined) userData.planoAtivo = true
+  if (userData.dataExpiracao && userData.dataExpiracao.toDate() < new Date()) {
+    await ref.update({ planoAtivo: false })
+    userData.planoAtivo = false
+  }
+}
+
+// ▸ REALTIME — onSnapshot na coleção imoveis
+function ouvirImoveis() {
+  if (unsubImoveis) unsubImoveis()
+  unsubImoveis = db.collection('imoveis')
+    .orderBy('criadoEm', 'desc')
+    .onSnapshot(async snap => {
+      imoveis = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+      filtrarImoveis()
+
+      // stat imóveis
+      document.getElementById('statImoveis').textContent = imoveis.length
+
+      // stat corretores — conta users únicos
+      const usersSnap = await db.collection('users').get()
+      document.getElementById('statCorretores').textContent = usersSnap.size
+
+      // stat bairros — conta bairros únicos nos imóveis
+      const bairros = new Set(imoveis.map(im => im.bairro).filter(Boolean))
+      document.getElementById('statBairros').textContent = bairros.size
+
+    }, () => {
+      document.getElementById('gridImoveis').innerHTML =
+        '<p style="color:var(--muted);text-align:center;padding:40px;grid-column:1/-1">Configure o Firebase para exibir imóveis.</p>'
+    })
+}
+
+// ▸ RENDER
+function formatarPreco(v) {
+  return 'R$ ' + Number(v).toLocaleString('pt-BR')
+}
+
+function renderizarCards(lista) {
+  const grid = document.getElementById('gridImoveis')
+  const nada = document.getElementById('noResults')
+  if (!lista.length) {
+    grid.innerHTML = ''
+    nada.classList.add('visible')
+    return
+  }
+  nada.classList.remove('visible')
+  grid.innerHTML = lista.map(im => {
+    const waNum = im.whatsapp || WHATSAPP
+    const ehDono = currentUser && im.uid === currentUser.uid
+    return `
+    <div class="card">
+      <div class="card-image">
+        ${im.destaque ? '<div class="badge">Destaque</div>' : ''}
+        <img src="${im.foto || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800'}" alt="${im.titulo}" loading="lazy">
+      </div>
+      <div class="card-body">
+        <div class="card-type">${im.tipo} • Venda</div>
+        <h3>${im.titulo}</h3>
+        <div class="location">${im.bairro} • São José dos Campos</div>
+        <div class="features">
+          ${im.quartos ? `<div class="feature">${im.quartos} quartos</div>` : ''}
+          ${im.area    ? `<div class="feature">${im.area}m²</div>`         : ''}
+          ${im.vagas   ? `<div class="feature">${im.vagas} vaga${im.vagas > 1 ? 's' : ''}</div>` : ''}
+        </div>
+        <div class="card-footer">
+          <div class="price">${formatarPreco(im.preco)}</div>
+          <div class="actions">
+            ${ehDono ? `<button class="delete" onclick="excluirImovel('${im.id}')">Excluir</button>` : ''}
+            <a class="whatsapp" href="https://api.whatsapp.com/send?phone=${waNum}&text=Olá%2C%20tenho%20interesse%20no%20imóvel%3A%20${encodeURIComponent(im.titulo)}" target="_blank">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>`
+  }).join('')
+}
+
+// ▸ FILTRO
+function filtrarImoveis() {
+  const texto = document.getElementById('searchInput').value.toLowerCase()
+  const tipo  = document.getElementById('searchTipo').value
+  renderizarCards(imoveis.filter(im =>
+    (!texto || im.titulo.toLowerCase().includes(texto) || im.bairro.toLowerCase().includes(texto)) &&
+    (!tipo  || im.tipo === tipo)
+  ))
+}
+
+// ▸ EXCLUIR
+async function excluirImovel(id) {
+  if (!currentUser) { showToast('Faça login para excluir'); return }
+  if (!confirm('Excluir este imóvel?')) return
+  try {
+    await db.collection('imoveis').doc(id).delete()
+    showToast('Imóvel excluído!')
+  } catch(e) { showToast('Erro: ' + e.message) }
+}
+
+// ▸ PUBLICAR
+async function publicarImovel() {
+  if (!currentUser) { showToast('Faça login antes de publicar'); openModal(); return }
+  if (!userData?.planoAtivo) {
+    showToast('Seu período expirou. Renove o plano.')
+    document.querySelector('.section.pricing').scrollIntoView({ behavior: 'smooth' })
+    return
+  }
+  // verifica quota — usa campo uid (schema original do projeto)
+  const snap  = await db.collection('imoveis').where('uid', '==', currentUser.uid).get()
+  const limite = QUOTAS[userData.plan] || 1
+  if (snap.size >= limite) {
+    showToast(`Limite do plano ${NOMES_PLANO[userData.plan]} (${limite} imóvel${limite > 1 ? 's' : ''}) atingido`)
+    if (userData.plan !== 'master')
+      setTimeout(() => { if (confirm('Fazer upgrade?')) document.querySelector('.section.pricing').scrollIntoView({ behavior: 'smooth' }) }, 400)
+    return
+  }
+  const titulo   = document.getElementById('fTitulo').value.trim()
+  const tipo     = document.getElementById('fTipo').value
+  const bairro   = document.getElementById('fBairro').value.trim()
+  const preco    = document.getElementById('fPreco').value
+  const whatsapp = document.getElementById('fWhatsApp').value.trim().replace(/\D/g,'') || userData?.whatsapp || WHATSAPP
+  if (!titulo || !tipo || !bairro || !preco) { showToast('Preencha: título, tipo, bairro e preço'); return }
+
+  showToast('Publicando...')
+
+  // upload foto → Storage
+  let fotoURL = ''
+  if (fotosFiles.length) {
+    try {
+      const ref = storage.ref(`imoveis/${currentUser.uid}/${Date.now()}_${fotosFiles[0].name}`)
+      await ref.put(fotosFiles[0])
+      fotoURL = await ref.getDownloadURL()
+    } catch(_) {}
+  }
+
+  try {
+    await db.collection('imoveis').add({
+      titulo, tipo, bairro,
+      preco:     Number(preco),
+      quartos:   Number(document.getElementById('fQuartos').value) || null,
+      area:      Number(document.getElementById('fArea').value)    || null,
+      vagas:     Number(document.getElementById('fVagas').value)   || null,
+      desc:      document.getElementById('fDesc').value,
+      foto:      fotoURL,
+      destaque:  false,
+      uid:       currentUser.uid,
+      whatsapp:  whatsapp,
+      donoEmail: currentUser.email,
+      criadoEm:  firebase.firestore.FieldValue.serverTimestamp()
+    })
+    document.getElementById('formSuccess').classList.add('visible')
+    showToast('Imóvel publicado!')
+    ;['fTitulo','fTipo','fBairro','fPreco','fQuartos','fArea','fVagas','fDesc'].forEach(id => document.getElementById(id).value = '')
+    document.getElementById('uploadPreview').innerHTML = ''
+    fotosFiles = []
+    setTimeout(() => document.getElementById('formSuccess').classList.remove('visible'), 3000)
+  } catch(e) { showToast('Erro: ' + e.message) }
+}
+
+// ▸ PREVIEW DE FOTOS
+function previewFotos(e) {
+  fotosFiles = Array.from(e.target.files).slice(0, 5)
+  const preview = document.getElementById('uploadPreview')
+  preview.innerHTML = ''
+  fotosFiles.forEach(file => {
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const img = document.createElement('img')
+      img.src = ev.target.result
+      preview.appendChild(img)
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
+// ▸ MODAL
+function openModal()  { document.getElementById('modalAuth').classList.add('open') }
+function closeModal() { document.getElementById('modalAuth').classList.remove('open') }
+
+function switchTab(tab) {
+  document.getElementById('tabLogin').style.display    = tab === 'login'    ? 'block' : 'none'
+  document.getElementById('tabCadastro').style.display = tab === 'cadastro' ? 'block' : 'none'
+  document.querySelectorAll('.modal-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab))
+}
+
+// ▸ AUTH — LOGIN / CADASTRO / GOOGLE / LOGOUT
+async function fazerLogin() {
+  const email = document.getElementById('loginEmail').value.trim()
+  const senha = document.getElementById('loginPassword').value
+  if (!email || !senha) { showToast('Preencha e-mail e senha'); return }
+  try {
+    await auth.signInWithEmailAndPassword(email, senha)
+    closeModal()
+  } catch(e) {
+    const msgs = { 'auth/user-not-found':'Usuário não encontrado','auth/wrong-password':'Senha incorreta','auth/invalid-credential':'E-mail ou senha incorretos','auth/too-many-requests':'Muitas tentativas. Aguarde.' }
+    showToast(msgs[e.code] || e.message)
+  }
+}
+
+async function cadastrar() {
+  const nome      = document.getElementById('cadNome').value.trim()
+  const email     = document.getElementById('cadEmail').value.trim()
+  const whatsapp  = document.getElementById('cadWhatsApp').value.trim().replace(/\D/g,'')
+  const senha     = document.getElementById('cadSenha').value
+  if (!nome || !email || !senha) { showToast('Preencha todos os campos'); return }
+  if (senha.length < 6) { showToast('Senha mínimo 6 caracteres'); return }
+  try {
+    const cred = await auth.createUserWithEmailAndPassword(email, senha)
+    await cred.user.updateProfile({ displayName: nome })
+    await db.collection('users').doc(cred.user.uid).set({
+      plan: 'starter',
+      nome,
+      email,
+      whatsapp: whatsapp || ''
+    })
+    closeModal()
+    showToast('Conta criada! Bem-vindo, ' + nome + ' 🎉')
+  } catch(e) {
+    const msgs = { 'auth/email-already-in-use':'E-mail já cadastrado','auth/weak-password':'Senha muito fraca' }
+    showToast(msgs[e.code] || e.message)
+  }
+}
+
+async function loginGoogle() {
+  try {
+    await auth.signInWithPopup(googleProvider)
+    closeModal()
+  } catch(e) { showToast('Erro Google: ' + e.message) }
+}
+
+async function logout() {
+  await auth.signOut()
+  showToast('Até logo!')
+}
+
+// ▸ NAV PÓS-LOGIN
+function atualizarNavLogado() {
+  if (!currentUser || !userData) return
+  const nome  = (currentUser.displayName || currentUser.email).split(/[\s@]/)[0]
+  const plano = userData.plan || 'starter'
+  const btn   = document.getElementById('btnEntrar')
+  btn.innerHTML = `${nome} <span style="background:var(--terra);color:#fff;font-size:10px;padding:3px 8px;border-radius:999px;margin-left:6px">${NOMES_PLANO[plano]}</span>`
+  btn.onclick = logout
+  if (userData.whatsapp) {
+    const fWa = document.getElementById('fWhatsApp')
+    if (fWa) fWa.value = userData.whatsapp
+  }
+  if (!userData.planoAtivo) setTimeout(() => showToast('Período grátis expirado. Renove para publicar.'), 1200)
+}
+
+// ▸ HELPERS
+function showToast(msg) {
+  const t = document.getElementById('toast')
+  t.textContent = msg
+  t.classList.add('show')
+  clearTimeout(t._t)
+  t._t = setTimeout(() => t.classList.remove('show'), 3200)
+}
+
+function scrollToForm() {
+  document.getElementById('secaoForm').scrollIntoView({ behavior: 'smooth' })
+}
+
+function abrirPagamento(plano) {
+  if (!currentUser) { showToast('Faça login primeiro'); openModal(); return }
+  const link = LINKS_PAGAMENTO[plano]
+  if (!link) return
+  window.open(link + '?uid=' + currentUser.uid, '_blank')
+}
+</script>
+</body>
+</html>
