@@ -643,32 +643,21 @@ function scrollToForm() {
 async function abrirPagamento(plano) {
   if (!currentUser) { showToast('Faça login primeiro'); openModal(); return }
 
-  const PRECOS = { starter: 3900, pro: 6900, master: 12900 }
-  const NOMES_LINK = { starter: 'IMORAR Starter — R$ 39/mês', pro: 'IMORAR PRO — R$ 69/mês', master: 'IMORAR Master — R$ 129/mês' }
-
   showToast('Gerando link de pagamento...')
 
   try {
-    const payload = {
-      handle: 'jorge-ricci-junior',
-      items: [{ quantity: 1, price: PRECOS[plano], description: NOMES_LINK[plano] }],
-      order_nsu: currentUser.uid + '|' + plano,
-      webhook_url: 'https://appimorar.netlify.app/.netlify/functions/infinitepay-webhook',
-      redirect_url: 'https://appimorar.netlify.app'
-    }
-
-    const res = await fetch('https://api.checkout.infinitepay.io/links', {
-      method: 'POST',
+    const res = await fetch('/.netlify/functions/gerar-link', {
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body:    JSON.stringify({ uid: currentUser.uid, plano })
     })
 
     const data = await res.json()
-    if (data?.url || data?.link || data?.checkout_url) {
-      window.open(data.url || data.link || data.checkout_url, '_blank')
+    if (data?.url) {
+      window.open(data.url, '_blank')
     } else {
       showToast('Erro ao gerar link. Tente novamente.')
-      console.error('InfinitePay response:', data)
+      console.error('Erro:', data)
     }
   } catch(e) {
     showToast('Erro: ' + e.message)
