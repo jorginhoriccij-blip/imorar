@@ -640,11 +640,39 @@ function scrollToForm() {
   document.getElementById('secaoForm').scrollIntoView({ behavior: 'smooth' })
 }
 
-function abrirPagamento(plano) {
+async function abrirPagamento(plano) {
   if (!currentUser) { showToast('Faça login primeiro'); openModal(); return }
-  const link = LINKS_PAGAMENTO[plano]
-  if (!link) return
-  window.open(link + '?uid=' + currentUser.uid, '_blank')
+
+  const PRECOS = { starter: 3900, pro: 6900, master: 12900 }
+  const NOMES_LINK = { starter: 'IMORAR Starter — R$ 39/mês', pro: 'IMORAR PRO — R$ 69/mês', master: 'IMORAR Master — R$ 129/mês' }
+
+  showToast('Gerando link de pagamento...')
+
+  try {
+    const payload = {
+      handle: 'jorge-ricci-junior',
+      items: [{ quantity: 1, price: PRECOS[plano], description: NOMES_LINK[plano] }],
+      order_nsu: currentUser.uid + '|' + plano,
+      webhook_url: 'https://appimorar.netlify.app/.netlify/functions/infinitepay-webhook',
+      redirect_url: 'https://appimorar.netlify.app'
+    }
+
+    const res = await fetch('https://api.checkout.infinitepay.io/links', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+
+    const data = await res.json()
+    if (data?.url || data?.link || data?.checkout_url) {
+      window.open(data.url || data.link || data.checkout_url, '_blank')
+    } else {
+      showToast('Erro ao gerar link. Tente novamente.')
+      console.error('InfinitePay response:', data)
+    }
+  } catch(e) {
+    showToast('Erro: ' + e.message)
+  }
 }
 </script>
 </body>
