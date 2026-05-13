@@ -479,17 +479,21 @@ async function excluirImovel(id) {
 // ▸ PUBLICAR
 async function publicarImovel() {
   if (!currentUser) { showToast('Faça login antes de publicar'); openModal(); return }
-  if (!userData?.planoAtivo) {
+
+  // busca plano atualizado do Firestore (não usa cache)
+  const userDoc = await db.collection('users').doc(currentUser.uid).get()
+  const userAtual = userDoc.data() || {}
+
+  if (!userAtual.planoAtivo) {
     showToast('Seu período expirou. Renove o plano.')
     document.querySelector('.section.pricing').scrollIntoView({ behavior: 'smooth' })
     return
   }
-  // verifica quota — usa campo uid (schema original do projeto)
-  const snap  = await db.collection('imoveis').where('uid', '==', currentUser.uid).get()
-  const limite = QUOTAS[userData.plan] || 1
+  const snap   = await db.collection('imoveis').where('uid', '==', currentUser.uid).get()
+  const limite = QUOTAS[userAtual.plan] || 1
   if (snap.size >= limite) {
-    showToast(`Limite do plano ${NOMES_PLANO[userData.plan]} (${limite} imóvel${limite > 1 ? 's' : ''}) atingido`)
-    if (userData.plan !== 'master')
+    showToast('Limite do plano ' + (NOMES_PLANO[userAtual.plan]||'') + ' (' + limite + ' imóvel' + (limite > 1 ? 's' : '') + ') atingido')
+    if (userAtual.plan !== 'master')
       setTimeout(() => { if (confirm('Fazer upgrade?')) document.querySelector('.section.pricing').scrollIntoView({ behavior: 'smooth' }) }, 400)
     return
   }
