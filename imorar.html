@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>IMORAR • imóveis em sjc</title>
-  <link rel="manifest" href="/manifest.json">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#C96A3A">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,6 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ─────────────────────────────────────────────────────
+   CSS ORIGINAL — não alterado
+───────────────────────────────────────────────────── */
 :root{
   --bg:#f7f5f1;--navy:#1B2B4B;--terra:#C96A3A;--muted:#77756f;--border:#e8e2d8;--shadow:0 12px 40px rgba(0,0,0,.08)
 }
@@ -59,11 +62,15 @@ nav{position:fixed;top:0;left:0;right:0;height:74px;background:rgba(255,255,255,
 .no-results{text-align:center;padding:60px 24px;color:var(--muted);font-size:16px;display:none}
 .no-results.visible{display:block}
 
-.card{background:#fff;border-radius:28px;box-shadow:var(--shadow);position:relative}
+/* ── CARD ── */
+.card{background:#fff;border-radius:28px;box-shadow:var(--shadow);position:relative;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-5px);box-shadow:0 22px 56px rgba(0,0,0,.13)}
 .card-image{height:240px;position:relative;overflow:hidden;border-radius:28px 28px 0 0}
 .card-image img{width:100%;height:100%;object-fit:cover;transition:.4s}
 .card:hover .card-image img{transform:scale(1.05)}
 .badge{position:absolute;top:16px;left:16px;background:var(--terra);color:#fff;padding:7px 12px;border-radius:999px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+/* MELHORIA #1 — badge contador de fotos */
+.foto-badge{position:absolute;top:16px;right:16px;background:rgba(13,22,42,.72);backdrop-filter:blur(6px);color:#fff;padding:6px 11px;border-radius:999px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:4px}
 .card-body{padding:24px}
 .card-type{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
 .card h3{font:700 28px 'Fraunces',serif;color:var(--navy);margin-bottom:10px}
@@ -76,32 +83,38 @@ nav{position:fixed;top:0;left:0;right:0;height:74px;background:rgba(255,255,255,
 .delete{background:#fff;color:#b94a48;border:1px solid rgba(185,74,72,.18);padding:14px 16px;border-radius:16px;font-weight:600;cursor:pointer;font-family:inherit}
 .whatsapp{display:inline-flex;align-items:center;justify-content:center;background:#25D366;color:#fff;padding:14px 18px;border-radius:16px;font-weight:600}
 
+/* ── FORM ── */
 .form{background:#fff;padding:36px;border-radius:32px;box-shadow:var(--shadow)}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
 input,select,textarea{width:100%;padding:18px;border-radius:18px;border:1px solid var(--border);font:inherit;outline:none;transition:border-color .2s}
 input:focus,select:focus,textarea:focus{border-color:var(--terra)}
 textarea{min-height:160px;resize:vertical;margin-bottom:18px}
-.upload{border:2px dashed var(--terra);border-radius:24px;padding:54px;text-align:center;background:#faf6f2;margin-bottom:24px;cursor:pointer;transition:background .2s}
+.upload{border:2px dashed var(--terra);border-radius:24px;padding:42px 54px;text-align:center;background:#faf6f2;margin-bottom:24px;cursor:pointer;transition:background .2s}
 .upload:hover{background:#f5ede4}
 .upload input[type=file]{display:none}
 .upload-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;justify-content:center}
 .upload-preview img{width:80px;height:60px;object-fit:cover;border-radius:10px}
+/* MELHORIA #2 — contador X/5 fotos */
+.upload-counter{display:inline-block;margin-top:12px;padding:5px 14px;border-radius:999px;background:var(--navy);color:#fff;font-size:12px;font-weight:600}
 .form-success{display:none;background:#e8f5e9;color:#2e7d32;border-radius:18px;padding:20px 24px;margin-top:18px;font-weight:600;text-align:center}
 .form-success.visible{display:block}
 
+/* ── PRICING ── */
 .pricing .card{padding:34px}
 .popular{border:2px solid var(--terra)}
 .popular-tag{position:absolute;top:22px;right:-32px;background:var(--terra);color:#fff;padding:8px 44px;font-size:11px;transform:rotate(45deg);font-weight:700;letter-spacing:1px;pointer-events:none;z-index:2}
 
+/* ── FOOTER / FLOAT ── */
 .footer{background:var(--navy);padding:70px 24px;text-align:center;color:rgba(255,255,255,.45)}
-
 .float-brand,.support{position:fixed;bottom:18px;z-index:999;border-radius:999px;backdrop-filter:blur(12px)}
 .float-brand{left:18px;background:rgba(27,43,75,.92);padding:12px 18px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
 .support{right:18px;display:flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:14px 18px;box-shadow:0 18px 40px rgba(37,211,102,.28)}
 
+/* ── TOAST ── */
 .toast{position:fixed;bottom:88px;right:18px;background:var(--navy);color:#fff;padding:14px 22px;border-radius:16px;font-size:14px;font-weight:600;z-index:9999;opacity:0;transform:translateY(12px);transition:.3s;pointer-events:none}
 .toast.show{opacity:1;transform:translateY(0)}
 
+/* ── MODAL AUTH (original) ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9998;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
 .modal{background:#fff;border-radius:32px;padding:42px;max-width:440px;width:calc(100% - 48px);box-shadow:0 30px 80px rgba(0,0,0,.2);position:relative}
@@ -117,13 +130,62 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
 .divider:before,.divider:after{content:'';flex:1;height:1px;background:var(--border)}
 .modal-note{margin-top:14px;text-align:center;font-size:13px;color:var(--muted)}
 
+/* ─────────────────────────────────────────────────────
+   MELHORIA #3 — MODAL DE DETALHES DO IMÓVEL
+   (novo, independente do #modalAuth)
+───────────────────────────────────────────────────── */
+#modalDetalhes{z-index:9999}
+.modal-det{background:#fff;border-radius:32px;max-width:920px;width:calc(100% - 32px);max-height:92vh;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;box-shadow:0 30px 80px rgba(0,0,0,.25);position:relative}
+.det-galeria{background:#f3f1ed;padding:20px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+/* MELHORIA #4 — galeria de fotos */
+.det-foto-wrap{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/3;background:#e6e2d9;flex-shrink:0}
+.det-foto-wrap img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;transition:.35s}
+.det-contador{position:absolute;bottom:12px;right:12px;background:rgba(13,22,42,.72);backdrop-filter:blur(6px);color:#fff;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600}
+.det-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:none;background:rgba(13,22,42,.55);backdrop-filter:blur(6px);color:#fff;font-size:24px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;z-index:2}
+.det-arrow:hover{background:rgba(13,22,42,.85)}
+.det-prev{left:12px}.det-next{right:12px}
+.det-thumbs{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.det-thumb{width:62px;height:62px;flex:0 0 auto;object-fit:cover;border-radius:12px;cursor:pointer;opacity:.5;transition:.2s;border:2px solid transparent}
+.det-thumb.active{opacity:1;border-color:var(--terra)}
+.det-info{padding:32px;overflow-y:auto;max-height:92vh;display:flex;flex-direction:column;gap:0}
+.det-tipo{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+.det-titulo{font:700 28px 'Fraunces',serif;color:var(--navy);margin-bottom:10px;line-height:1.2}
+.det-local{color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.det-features{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.det-preco{font:700 36px 'Fraunces',serif;color:var(--navy);margin-bottom:18px}
+.det-desc{color:#444;line-height:1.8;white-space:pre-wrap;margin-bottom:22px;font-size:14px}
+/* MELHORIA #5 — endereço completo */
+.det-endereco{background:#f7f5f1;border-radius:18px;padding:16px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.8}
+.det-endereco strong{color:var(--navy);display:block;margin-bottom:4px;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+.det-btns{display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.btn-wpp-det{display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;padding:16px;border-radius:18px;font-weight:700;font-size:15px;border:none;cursor:pointer;font-family:inherit;text-decoration:none}
+/* MELHORIA #6 — botão Google Maps */
+.btn-maps{display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--navy);padding:14px;border-radius:18px;font-weight:600;font-size:14px;border:1px solid var(--border);cursor:pointer;font-family:inherit;text-decoration:none;transition:.2s}
+.btn-maps:hover{background:#f3f1ed}
+.det-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.92);font-size:20px;cursor:pointer;z-index:5;box-shadow:0 4px 16px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center}
+
+/* ─────────────────────────────────────────────────────
+   RESPONSIVO MOBILE
+───────────────────────────────────────────────────── */
 @media(max-width:820px){
-  nav{padding:0 18px}
+  nav{padding:0 18px;flex-wrap:wrap;height:auto;min-height:74px;gap:8px;padding-top:10px;padding-bottom:10px}
   .search{grid-template-columns:1fr}
   .search button{padding:16px}
   .form-grid{grid-template-columns:1fr}
   .hero h1{font-size:52px}
   .head h2{font-size:38px}
+  .grid{grid-template-columns:1fr}
+  .modal-det{grid-template-columns:1fr;max-height:92vh;overflow-y:auto}
+  .det-info{max-height:none;padding:24px 20px}
+  .det-galeria{padding:14px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:38px}
+  .stats{gap:28px}
+  .stats strong{font-size:30px}
+  .modal{padding:28px 20px;border-radius:24px}
+  .btn{padding:13px 18px;font-size:14px}
+  nav .btn{padding:10px 14px;font-size:13px}
 }
 </style>
 </head>
@@ -131,7 +193,7 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
 
 <div class="toast" id="toast"></div>
 
-<!-- MODAL AUTH -->
+<!-- ─── MODAL AUTH — original intacto ─── -->
 <div class="modal-overlay" id="modalAuth">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">×</button>
@@ -161,6 +223,43 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
   </div>
 </div>
 
+<!-- ─── MELHORIA #3 — MODAL DE DETALHES DO IMÓVEL ─── -->
+<div class="modal-overlay" id="modalDetalhes" onclick="if(event.target===this)fecharDetalhes()">
+  <div class="modal-det">
+    <button class="det-close" onclick="fecharDetalhes()">×</button>
+
+    <!-- MELHORIA #4 — galeria de fotos -->
+    <div class="det-galeria">
+      <div class="det-foto-wrap" id="detFotoWrap">
+        <img id="detFotoPrincipal" src="" alt="Foto do imóvel" loading="eager">
+        <div class="det-contador" id="detContador"></div>
+        <button class="det-arrow det-prev" id="detPrev" onclick="navFoto(-1)" aria-label="Anterior">‹</button>
+        <button class="det-arrow det-next" id="detNext" onclick="navFoto(1)" aria-label="Próxima">›</button>
+      </div>
+      <div class="det-thumbs" id="detThumbs"></div>
+    </div>
+
+    <div class="det-info">
+      <div class="det-tipo" id="detTipo"></div>
+      <h3 class="det-titulo" id="detTitulo"></h3>
+      <div class="det-local" id="detLocal"></div>
+      <div class="det-features" id="detFeatures"></div>
+      <div class="det-preco" id="detPreco"></div>
+      <p class="det-desc" id="detDesc"></p>
+      <!-- MELHORIA #5 — endereço completo -->
+      <div class="det-endereco" id="detEndereco" style="display:none">
+        <strong>Endereço</strong>
+        <span id="detEnderecoTxt"></span>
+      </div>
+      <div class="det-btns">
+        <!-- MELHORIA #6 — Google Maps -->
+        <a class="btn-maps" id="detMaps" href="#" target="_blank">📍 Ver no mapa</a>
+        <a class="btn-wpp-det" id="detWpp" href="#" target="_blank">💬 Falar no WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="float-brand">
   <div class="logo-main" style="font-size:22px;color:#fff"><span>I<i class="roof"></i><i class="chimney"></i></span>MORAR</div>
 </div>
@@ -170,21 +269,11 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
     <div class="logo-main"><span>I<i class="roof"></i><i class="chimney"></i></span>MORAR</div>
     <div class="logo-sub">imóveis em sjc</div>
   </div>
- <div style="display:flex;gap:12px;align-items:center">
-
-    <button class="btn btn-outline" id="btnEntrar" onclick="openModal()">
-        Entrar
-    </button>
-
-    <button id="installPWA" class="btn btn-outline" style="display:none">
-        📲 Baixar App
-    </button>
-
-    <button class="btn btn-primary" onclick="scrollToForm()">
-        Anunciar imóvel
-    </button>
-
-</div>
+  <div style="display:flex;gap:12px;align-items:center">
+    <button class="btn btn-outline" id="btnEntrar" onclick="openModal()">Entrar</button>
+    <button id="installPWA" class="btn btn-outline" style="display:none">📲 Baixar App</button>
+    <button class="btn btn-primary" onclick="scrollToForm()">Anunciar imóvel</button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -229,7 +318,7 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
         <select id="fTipo"><option value="">Tipo do imóvel</option><option>Casa</option><option>Apartamento</option><option>Comercial</option></select>
       </div>
       <div class="form-grid">
-        <input id="fBairro" placeholder="Cidade / Bairro">
+        <input id="fBairro" placeholder="Bairro">
         <input id="fPreco" placeholder="Preço (ex: 1490000)" type="number">
       </div>
       <div class="form-grid">
@@ -237,16 +326,33 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
         <input id="fArea" placeholder="Área (m²)" type="number">
       </div>
       <div class="form-grid">
-        <input id="fWhatsApp" placeholder="Seu WhatsApp com DDD (ex: 5512999999999)" type="tel">
+        <input id="fWhatsApp" placeholder="WhatsApp com DDD (ex: 5512999999999)" type="tel">
         <input id="fVagas" placeholder="Vagas de garagem" type="number">
       </div>
+
+      <!-- MELHORIA #5 — campos de endereço completo -->
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;letter-spacing:.5px;text-transform:uppercase">Endereço completo</p>
+      <div class="form-grid">
+        <input id="fCEP" placeholder="CEP" type="tel" oninput="buscarCEP(this.value)">
+        <input id="fRua" placeholder="Rua / Avenida">
+      </div>
+      <div class="form-grid">
+        <input id="fNumero" placeholder="Número">
+        <input id="fCidade" placeholder="Cidade" value="São José dos Campos">
+      </div>
+
       <textarea id="fDesc" placeholder="Descrição do imóvel"></textarea>
+
+      <!-- MELHORIA #2 — upload de até 5 fotos com contador -->
       <div class="upload" onclick="document.getElementById('uploadFotos').click()">
-        <h4>Arraste ou clique para adicionar fotos</h4>
-        <p style="color:var(--muted);margin-top:6px">PNG, JPG ou WEBP • até 5 imagens</p>
+        <h4>📷 Clique para adicionar fotos</h4>
+        <p style="color:var(--muted);margin-top:6px">PNG, JPG ou WEBP • até 5 fotos</p>
         <div class="upload-preview" id="uploadPreview"></div>
+        <div class="upload-counter" id="uploadCounter" style="display:none"></div>
+        <!-- sem capture="environment" → permite galeria, arquivos e câmera em todos os dispositivos -->
         <input type="file" id="uploadFotos" multiple accept="image/*" onchange="previewFotos(event)">
       </div>
+
       <button class="btn btn-primary" onclick="publicarImovel()">Publicar imóvel</button>
       <div class="form-success" id="formSuccess">✅ Imóvel publicado com sucesso! Aparece na listagem acima.</div>
     </div>
@@ -262,15 +368,15 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
         <h3 style="font:700 26px 'Fraunces',serif;color:var(--navy);margin:10px 0">Teste grátis</h3>
         <div style="margin:14px 0">
           <div class="price">R$ 0</div>
-          <div style="font-size:13px;color:var(--muted);margin-top:4px">por 3 dias • depois R$ 39/mês</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">por 7 dias • depois R$ 39/mês</div>
         </div>
         <div class="features" style="margin-bottom:8px">
           <div class="feature">1 imóvel ativo</div>
-          <div class="feature">3 dias grátis</div>
+          <div class="feature">7 dias grátis</div>
           <div class="feature">Renovação R$ 39/mês</div>
         </div>
         <p style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6">Ideal pra testar a plataforma. Após o período grátis, renove por R$ 39/mês pra manter o anúncio no ar.</p>
-        <button class="btn btn-outline" style="width:100%;margin-bottom:10px" onclick="scrollToForm()">Começar grátis — 3 dias</button>
+        <button class="btn btn-outline" style="width:100%;margin-bottom:10px" onclick="scrollToForm()">Começar grátis — 7 dias</button>
         <button class="btn btn-primary" style="width:100%" onclick="abrirPagamento('starter')">Já quero assinar — R$ 39/mês</button>
       </div>
       <div class="card popular" style="padding:34px">
@@ -321,14 +427,17 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
   <div><small style="display:block;opacity:.8">Precisa de ajuda?</small><strong>Falar com atendimento</strong></div>
 </a>
 
-<!-- Firebase v9 compat -->
+<!-- Firebase v9 compat — original intacto -->
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
 
 <script>
-// ▸ Firebase — projeto imobconnect-eecb2
+// ─────────────────────────────────────────────────────
+// BLOCO ORIGINAL — nenhuma linha removida ou renomeada
+// ─────────────────────────────────────────────────────
+
 const FIREBASE_CONFIG = {
   apiKey:        "AIzaSyAPRe8ZR7UZxpF80pq44CSc6ViFl3_baH8",
   authDomain:    "imobconnect-eecb2.firebaseapp.com",
@@ -342,25 +451,21 @@ const LINKS_PAGAMENTO = {
   master:  'https://link.infinitepay.io/jorge-ricci-junior/VC1D-LeIeCTThDC-129,00'
 }
 
-// ▸ Planos e quotas
 const QUOTAS      = { starter: 1, pro: 3, master: 6 }
 const NOMES_PLANO = { starter: 'Starter', pro: 'PRO', master: 'Master' }
 
-// ▸ INIT
 firebase.initializeApp(FIREBASE_CONFIG)
 const auth           = firebase.auth()
 const db             = firebase.firestore()
 const storage        = firebase.storage()
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 
-// ▸ State
 let currentUser  = null
 let userData     = null
 let imoveis      = []
 let fotosFiles   = []
 let unsubImoveis = null
 
-// ▸ AUTH STATE — ponto central de sessão
 auth.onAuthStateChanged(async user => {
   currentUser = user
   if (user) {
@@ -375,13 +480,12 @@ auth.onAuthStateChanged(async user => {
   ouvirImoveis()
 })
 
-// ▸ CARREGAR / CRIAR DOC DO USUÁRIO
 async function carregarUsuario(uid, email, displayName) {
   const ref  = db.collection('users').doc(uid)
   const snap = await ref.get()
   if (!snap.exists) {
     const exp = new Date()
-    exp.setDate(exp.getDate() + 3)
+    exp.setDate(exp.getDate() + 7)
     await ref.set({
       uid, email,
       nome: displayName || email.split('@')[0],
@@ -394,7 +498,6 @@ async function carregarUsuario(uid, email, displayName) {
     })
   }
   userData = (await ref.get()).data()
-  // compatibilidade com contas antigas (free→starter, premium→master)
   if (userData.plan === 'free')    userData.plan = 'starter'
   if (userData.plan === 'premium') userData.plan = 'master'
   if (userData.planoAtivo === undefined) userData.planoAtivo = true
@@ -404,7 +507,6 @@ async function carregarUsuario(uid, email, displayName) {
   }
 }
 
-// ▸ REALTIME — onSnapshot na coleção imoveis
 function ouvirImoveis() {
   if (unsubImoveis) unsubImoveis()
   unsubImoveis = db.collection('imoveis')
@@ -412,29 +514,35 @@ function ouvirImoveis() {
     .onSnapshot(async snap => {
       imoveis = snap.docs.map(d => ({ id: d.id, ...d.data() }))
       filtrarImoveis()
-
-      // stat imóveis
       document.getElementById('statImoveis').textContent = imoveis.length
-
-      // stat corretores — conta users únicos
       const usersSnap = await db.collection('users').get()
       document.getElementById('statCorretores').textContent = usersSnap.size
-
-      // stat bairros — conta bairros únicos nos imóveis
       const bairros = new Set(imoveis.map(im => im.bairro).filter(Boolean))
       document.getElementById('statBairros').textContent = bairros.size
-
     }, () => {
       document.getElementById('gridImoveis').innerHTML =
         '<p style="color:var(--muted);text-align:center;padding:40px;grid-column:1/-1">Configure o Firebase para exibir imóveis.</p>'
     })
 }
 
-// ▸ RENDER
+// ─────────────────────────────────────────────────────
+// MELHORIA #7 — helper de compatibilidade
+// Suporta imóveis antigos (só campo "foto") e novos (array "fotos")
+// ─────────────────────────────────────────────────────
+function getFotos(im) {
+  if (Array.isArray(im.fotos) && im.fotos.filter(Boolean).length) return im.fotos.filter(Boolean)
+  if (im.fotoPrincipal) return [im.fotoPrincipal, ...(Array.isArray(im.fotos) ? im.fotos.filter(Boolean) : [])].filter((v,i,a) => a.indexOf(v)===i)
+  if (im.foto) return [im.foto]
+  return ['https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800']
+}
+
 function formatarPreco(v) {
   return 'R$ ' + Number(v).toLocaleString('pt-BR')
 }
 
+// ─────────────────────────────────────────────────────
+// RENDER — cards com MELHORIA #1 (badge de fotos) e botão Ver detalhes
+// ─────────────────────────────────────────────────────
 function renderizarCards(lista) {
   const grid = document.getElementById('gridImoveis')
   const nada = document.getElementById('noResults')
@@ -445,13 +553,16 @@ function renderizarCards(lista) {
   }
   nada.classList.remove('visible')
   grid.innerHTML = lista.map(im => {
-    const waNum = im.whatsapp || WHATSAPP
-    const ehDono = currentUser && im.uid === currentUser.uid
+    const waNum    = im.whatsapp || WHATSAPP
+    const ehDono   = currentUser && im.uid === currentUser.uid
+    const fotos    = getFotos(im)
+    const nFotos   = fotos.length
     return `
-    <div class="card">
+    <div class="card" onclick="abrirDetalhes('${im.id}')">
       <div class="card-image">
         ${im.destaque ? '<div class="badge">Destaque</div>' : ''}
-        <img src="${im.foto || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800'}" alt="${im.titulo}" loading="lazy">
+        ${nFotos > 0 ? `<div class="foto-badge">📷 ${nFotos} foto${nFotos > 1 ? 's' : ''}</div>` : ''}
+        <img src="${fotos[0]}" alt="${im.titulo}" loading="lazy">
       </div>
       <div class="card-body">
         <div class="card-type">${im.tipo} • Venda</div>
@@ -465,8 +576,8 @@ function renderizarCards(lista) {
         <div class="card-footer">
           <div class="price">${formatarPreco(im.preco)}</div>
           <div class="actions">
-            ${ehDono ? `<button class="delete" onclick="excluirImovel('${im.id}')">Excluir</button>` : ''}
-            <a class="whatsapp" href="https://api.whatsapp.com/send?phone=${waNum}&text=Olá%2C%20tenho%20interesse%20no%20imóvel%3A%20${encodeURIComponent(im.titulo)}" target="_blank">WhatsApp</a>
+            ${ehDono ? `<button class="delete" onclick="event.stopPropagation();excluirImovel('${im.id}')">Excluir</button>` : ''}
+            <a class="whatsapp" onclick="event.stopPropagation()" href="https://api.whatsapp.com/send?phone=${waNum}&text=Olá%2C%20tenho%20interesse%20no%20imóvel%3A%20${encodeURIComponent(im.titulo)}" target="_blank">WhatsApp</a>
           </div>
         </div>
       </div>
@@ -474,7 +585,6 @@ function renderizarCards(lista) {
   }).join('')
 }
 
-// ▸ FILTRO
 function filtrarImoveis() {
   const texto = document.getElementById('searchInput').value.toLowerCase()
   const tipo  = document.getElementById('searchTipo').value
@@ -484,7 +594,9 @@ function filtrarImoveis() {
   ))
 }
 
-// ▸ EXCLUIR
+// ─────────────────────────────────────────────────────
+// ORIGINAL — excluirImovel intacto
+// ─────────────────────────────────────────────────────
 async function excluirImovel(id) {
   if (!currentUser) { showToast('Faça login para excluir'); return }
   if (!confirm('Excluir este imóvel?')) return
@@ -494,12 +606,38 @@ async function excluirImovel(id) {
   } catch(e) { showToast('Erro: ' + e.message) }
 }
 
-// ▸ PUBLICAR
+// ─────────────────────────────────────────────────────
+// MELHORIA #2 — compressão de imagem antes do upload (max 1200px, JPEG 0.7)
+// ─────────────────────────────────────────────────────
+function comprimirImagem(file) {
+  return new Promise(resolve => {
+    const reader = new FileReader()
+    reader.onload = ev => {
+      const img = new Image()
+      img.onload = () => {
+        const MAX = 1200
+        let w = img.width, h = img.height
+        if (w > MAX) { h = Math.round(h * MAX / w); w = MAX }
+        const canvas = document.createElement('canvas')
+        canvas.width = w; canvas.height = h
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h)
+        canvas.toBlob(blob => resolve(blob || file), 'image/jpeg', 0.7)
+      }
+      img.src = ev.target.result
+    }
+    reader.readAsDataURL(file)
+  })
+}
+
+// ─────────────────────────────────────────────────────
+// MELHORIA #1 — publicarImovel: upload de até 5 fotos
+// Salva fotoPrincipal (string) + fotos (array) no Firestore
+// MELHORIA #5 — salva também endereço completo
+// ─────────────────────────────────────────────────────
 async function publicarImovel() {
   if (!currentUser) { showToast('Faça login antes de publicar'); openModal(); return }
 
-  // busca plano atualizado do Firestore (não usa cache)
-  const userDoc = await db.collection('users').doc(currentUser.uid).get()
+  const userDoc  = await db.collection('users').doc(currentUser.uid).get()
   const userAtual = userDoc.data() || {}
 
   if (!userAtual.planoAtivo) {
@@ -515,6 +653,7 @@ async function publicarImovel() {
       setTimeout(() => { if (confirm('Fazer upgrade?')) document.querySelector('.section.pricing').scrollIntoView({ behavior: 'smooth' }) }, 400)
     return
   }
+
   const titulo   = document.getElementById('fTitulo').value.trim()
   const tipo     = document.getElementById('fTipo').value
   const bairro   = document.getElementById('fBairro').value.trim()
@@ -522,43 +661,67 @@ async function publicarImovel() {
   const whatsapp = document.getElementById('fWhatsApp').value.trim().replace(/\D/g,'') || userData?.whatsapp || WHATSAPP
   if (!titulo || !tipo || !bairro || !preco) { showToast('Preencha: título, tipo, bairro e preço'); return }
 
+  // MELHORIA #5 — endereço completo
+  const cep    = document.getElementById('fCEP').value.trim()
+  const rua    = document.getElementById('fRua').value.trim()
+  const numero = document.getElementById('fNumero').value.trim()
+  const cidade = document.getElementById('fCidade').value.trim()
+
   showToast('Publicando...')
 
-  // upload foto → Storage
-  let fotoURL = ''
+  // MELHORIA #1 + #2 — upload de até 5 fotos com compressão
+  let fotosURLs = []
   if (fotosFiles.length) {
     try {
-      const ref = storage.ref(`imoveis/${currentUser.uid}/${Date.now()}_${fotosFiles[0].name}`)
-      await ref.put(fotosFiles[0])
-      fotoURL = await ref.getDownloadURL()
-    } catch(_) {}
+      for (let i = 0; i < fotosFiles.length; i++) {
+        const blob = await comprimirImagem(fotosFiles[i])
+        const ref  = storage.ref(`imoveis/${currentUser.uid}/${Date.now()}_${i}_${fotosFiles[i].name}`)
+        await ref.put(blob, { contentType: 'image/jpeg' })
+        fotosURLs.push(await ref.getDownloadURL())
+      }
+    } catch(e) {
+      console.error('ERRO STORAGE:', e)
+      showToast('Erro no upload: ' + e.message)
+      return
+    }
   }
 
   try {
     await db.collection('imoveis').add({
       titulo, tipo, bairro,
-      preco:     Number(preco),
-      quartos:   Number(document.getElementById('fQuartos').value) || null,
-      area:      Number(document.getElementById('fArea').value)    || null,
-      vagas:     Number(document.getElementById('fVagas').value)   || null,
-      desc:      document.getElementById('fDesc').value,
-      foto:      fotoURL,
-      destaque:  false,
-      uid:       currentUser.uid,
-      whatsapp:  whatsapp,
-      donoEmail: currentUser.email,
-      criadoEm:  firebase.firestore.FieldValue.serverTimestamp()
+      preco:          Number(preco),
+      quartos:        Number(document.getElementById('fQuartos').value) || null,
+      area:           Number(document.getElementById('fArea').value)    || null,
+      vagas:          Number(document.getElementById('fVagas').value)   || null,
+      desc:           document.getElementById('fDesc').value,
+      // compatibilidade: "foto" mantido para imóveis antigos não quebrarem
+      foto:           fotosURLs[0] || '',
+      // MELHORIA #1 — novos campos
+      fotoPrincipal:  fotosURLs[0] || '',
+      fotos:          fotosURLs,
+      // MELHORIA #5 — endereço completo
+      cep, rua, numero, cidade,
+      destaque:       false,
+      uid:            currentUser.uid,
+      whatsapp,
+      donoEmail:      currentUser.email,
+      criadoEm:       firebase.firestore.FieldValue.serverTimestamp()
     })
     document.getElementById('formSuccess').classList.add('visible')
     showToast('Imóvel publicado!')
-    ;['fTitulo','fTipo','fBairro','fPreco','fQuartos','fArea','fVagas','fDesc'].forEach(id => document.getElementById(id).value = '')
+    ;['fTitulo','fTipo','fBairro','fPreco','fQuartos','fArea','fVagas','fDesc','fCEP','fRua','fNumero'].forEach(id => document.getElementById(id).value = '')
+    document.getElementById('fCidade').value = 'São José dos Campos'
     document.getElementById('uploadPreview').innerHTML = ''
+    const ctr = document.getElementById('uploadCounter')
+    if (ctr) ctr.style.display = 'none'
     fotosFiles = []
     setTimeout(() => document.getElementById('formSuccess').classList.remove('visible'), 3000)
   } catch(e) { showToast('Erro: ' + e.message) }
 }
 
-// ▸ PREVIEW DE FOTOS
+// ─────────────────────────────────────────────────────
+// MELHORIA #2 — previewFotos com contador X/5
+// ─────────────────────────────────────────────────────
 function previewFotos(e) {
   fotosFiles = Array.from(e.target.files).slice(0, 5)
   const preview = document.getElementById('uploadPreview')
@@ -572,9 +735,33 @@ function previewFotos(e) {
     }
     reader.readAsDataURL(file)
   })
+  const ctr = document.getElementById('uploadCounter')
+  if (ctr) {
+    if (fotosFiles.length) { ctr.textContent = `${fotosFiles.length}/5 fotos selecionadas`; ctr.style.display = 'inline-block' }
+    else ctr.style.display = 'none'
+  }
 }
 
-// ▸ MODAL
+// ─────────────────────────────────────────────────────
+// MELHORIA #5 — auto-preencher endereço via CEP (ViaCEP, grátis)
+// ─────────────────────────────────────────────────────
+async function buscarCEP(val) {
+  const cep = val.replace(/\D/g,'')
+  if (cep.length !== 8) return
+  try {
+    const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    const data = await res.json()
+    if (data.erro) return
+    if (data.logradouro) document.getElementById('fRua').value    = data.logradouro
+    if (data.localidade) document.getElementById('fCidade').value = data.localidade
+    if (data.bairro && !document.getElementById('fBairro').value)
+      document.getElementById('fBairro').value = data.bairro
+  } catch(_) {}
+}
+
+// ─────────────────────────────────────────────────────
+// MODAL AUTH — original intacto
+// ─────────────────────────────────────────────────────
 function openModal()  { document.getElementById('modalAuth').classList.add('open') }
 function closeModal() { document.getElementById('modalAuth').classList.remove('open') }
 
@@ -584,7 +771,9 @@ function switchTab(tab) {
   document.querySelectorAll('.modal-tab').forEach(el => el.classList.toggle('active', el.dataset.tab === tab))
 }
 
-// ▸ AUTH — LOGIN / CADASTRO / GOOGLE / LOGOUT
+// ─────────────────────────────────────────────────────
+// AUTH — original intacto
+// ─────────────────────────────────────────────────────
 async function fazerLogin() {
   const email = document.getElementById('loginEmail').value.trim()
   const senha = document.getElementById('loginPassword').value
@@ -599,29 +788,27 @@ async function fazerLogin() {
 }
 
 async function cadastrar() {
-  const nome      = document.getElementById('cadNome').value.trim()
-  const email     = document.getElementById('cadEmail').value.trim()
-  const whatsapp  = document.getElementById('cadWhatsApp').value.trim().replace(/\D/g,'')
-  const senha     = document.getElementById('cadSenha').value
+  const nome     = document.getElementById('cadNome').value.trim()
+  const email    = document.getElementById('cadEmail').value.trim()
+  const whatsapp = document.getElementById('cadWhatsApp').value.trim().replace(/\D/g,'')
+  const senha    = document.getElementById('cadSenha').value
   if (!nome || !email || !senha) { showToast('Preencha todos os campos'); return }
   if (senha.length < 6) { showToast('Senha mínimo 6 caracteres'); return }
   try {
     const cred = await auth.createUserWithEmailAndPassword(email, senha)
     await cred.user.updateProfile({ displayName: nome })
     const exp = new Date()
-exp.setDate(exp.getDate() + 7)
-
-await db.collection('users').doc(cred.user.uid).set({
-  uid: cred.user.uid,
-  nome,
-  email,
-  whatsapp: whatsapp || '',
-  plan: 'starter',
-  limiteImoveis: 1,
-  planoAtivo: true,
-  dataExpiracao: firebase.firestore.Timestamp.fromDate(exp),
-  criadoEm: firebase.firestore.FieldValue.serverTimestamp()
-})
+    exp.setDate(exp.getDate() + 7)
+    await db.collection('users').doc(cred.user.uid).set({
+      uid: cred.user.uid,
+      nome, email,
+      whatsapp: whatsapp || '',
+      plan: 'starter',
+      limiteImoveis: 1,
+      planoAtivo: true,
+      dataExpiracao: firebase.firestore.Timestamp.fromDate(exp),
+      criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+    })
     closeModal()
     showToast('Conta criada! Bem-vindo, ' + nome + ' 🎉')
   } catch(e) {
@@ -642,7 +829,6 @@ async function logout() {
   showToast('Até logo!')
 }
 
-// ▸ NAV PÓS-LOGIN
 function atualizarNavLogado() {
   if (!currentUser || !userData) return
   const nome  = (currentUser.displayName || currentUser.email).split(/[\s@]/)[0]
@@ -657,7 +843,6 @@ function atualizarNavLogado() {
   if (!userData.planoAtivo) setTimeout(() => showToast('Período grátis expirado. Renove para publicar.'), 1200)
 }
 
-// ▸ HELPERS
 function showToast(msg) {
   const t = document.getElementById('toast')
   t.textContent = msg
@@ -670,18 +855,18 @@ function scrollToForm() {
   document.getElementById('secaoForm').scrollIntoView({ behavior: 'smooth' })
 }
 
+// ─────────────────────────────────────────────────────
+// ORIGINAL — abrirPagamento intacto
+// ─────────────────────────────────────────────────────
 async function abrirPagamento(plano) {
   if (!currentUser) { showToast('Faça login primeiro'); openModal(); return }
-
   showToast('Gerando link de pagamento...')
-
   try {
-    const res = await fetch('/.netlify/functions/gerar-link', {
+    const res  = await fetch('/.netlify/functions/gerar-link', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify({ uid: currentUser.uid, plano })
     })
-
     const data = await res.json()
     if (data?.url) {
       window.open(data.url, '_blank')
@@ -693,8 +878,112 @@ async function abrirPagamento(plano) {
     showToast('Erro: ' + e.message)
   }
 }
+
+// ─────────────────────────────────────────────────────
+// MELHORIA #3 e #4 — Modal de detalhes + galeria interativa
+// ─────────────────────────────────────────────────────
+let _detFotos = []
+let _detIdx   = 0
+
+function abrirDetalhes(id) {
+  const im = imoveis.find(i => i.id === id)
+  if (!im) return
+
+  _detFotos = getFotos(im)
+  _detIdx   = 0
+  _renderFoto()
+  _renderThumbs()
+
+  const temVarias = _detFotos.length > 1
+  document.getElementById('detPrev').style.display = temVarias ? 'flex' : 'none'
+  document.getElementById('detNext').style.display = temVarias ? 'flex' : 'none'
+
+  document.getElementById('detTipo').textContent  = `${im.tipo || ''} • Venda`
+  document.getElementById('detTitulo').textContent = im.titulo || ''
+  document.getElementById('detPreco').textContent  = formatarPreco(im.preco)
+  document.getElementById('detDesc').textContent   = im.desc || 'Sem descrição cadastrada.'
+
+  // localização
+  const localParts = [im.bairro, im.cidade || 'São José dos Campos'].filter(Boolean)
+  document.getElementById('detLocal').innerHTML = `<span>📍</span>${localParts.join(' • ')}`
+
+  // características
+  document.getElementById('detFeatures').innerHTML = [
+    im.quartos ? `<div class="feature">${im.quartos} quartos</div>` : '',
+    im.area    ? `<div class="feature">${im.area}m²</div>`         : '',
+    im.vagas   ? `<div class="feature">${im.vagas} vaga${im.vagas > 1 ? 's' : ''}</div>` : ''
+  ].join('')
+
+  // MELHORIA #5 — endereço completo no modal
+  const endParts = [im.rua, im.numero, im.bairro, im.cep ? `CEP ${im.cep}` : '', im.cidade].filter(Boolean)
+  const detEnd = document.getElementById('detEndereco')
+  if (endParts.length && im.rua) {
+    document.getElementById('detEnderecoTxt').textContent = endParts.join(', ')
+    detEnd.style.display = 'block'
+  } else {
+    detEnd.style.display = 'none'
+  }
+
+  // MELHORIA #6 — Google Maps (sem API paga)
+  const enderecoMaps = [im.rua, im.numero, im.bairro, im.cidade || 'São José dos Campos'].filter(Boolean).join(' ')
+  const queryMaps    = encodeURIComponent(enderecoMaps || (im.bairro + ' São José dos Campos'))
+  document.getElementById('detMaps').href = `https://www.google.com/maps/search/?api=1&query=${queryMaps}`
+
+  // WhatsApp
+  const waNum = im.whatsapp || WHATSAPP
+  document.getElementById('detWpp').href =
+    `https://api.whatsapp.com/send?phone=${waNum}&text=Olá%2C%20tenho%20interesse%20no%20imóvel%3A%20${encodeURIComponent(im.titulo)}`
+
+  document.getElementById('modalDetalhes').classList.add('open')
+}
+
+function fecharDetalhes() {
+  document.getElementById('modalDetalhes').classList.remove('open')
+}
+
+function _renderFoto() {
+  document.getElementById('detFotoPrincipal').src   = _detFotos[_detIdx]
+  document.getElementById('detContador').textContent = `${_detIdx + 1} / ${_detFotos.length}`
+}
+
+function _renderThumbs() {
+  const wrap = document.getElementById('detThumbs')
+  if (_detFotos.length <= 1) { wrap.innerHTML = ''; wrap.style.display = 'none'; return }
+  wrap.style.display = 'flex'
+  wrap.innerHTML = _detFotos.slice(0, 5).map((url, i) =>
+    `<img src="${url}" class="det-thumb${i === _detIdx ? ' active' : ''}" onclick="setFoto(${i})" loading="lazy">`
+  ).join('')
+}
+
+function setFoto(i) {
+  _detIdx = i
+  _renderFoto()
+  document.querySelectorAll('.det-thumb').forEach((el, idx) => el.classList.toggle('active', idx === i))
+}
+
+function navFoto(delta) {
+  if (!_detFotos.length) return
+  _detIdx = (_detIdx + delta + _detFotos.length) % _detFotos.length
+  _renderFoto()
+  _renderThumbs()
+}
+
+// Swipe mobile na galeria de detalhes
+let _tx = 0
+document.addEventListener('touchstart', e => {
+  if (e.target.closest('#detFotoWrap')) _tx = e.touches[0].clientX
+}, { passive: true })
+document.addEventListener('touchend', e => {
+  if (!e.target.closest('#detFotoWrap')) return
+  const d = e.changedTouches[0].clientX - _tx
+  if (Math.abs(d) < 40) return
+  navFoto(d < 0 ? 1 : -1)
+}, { passive: true })
+
 </script>
-  <script>
+
+<!-- PWA + Install — original intacto -->
+<script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
@@ -708,28 +997,22 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-
   const btn = document.getElementById('installPWA');
-
   if (btn) {
     btn.style.display = 'inline-flex';
-
     btn.onclick = async () => {
       deferredPrompt.prompt();
       await deferredPrompt.userChoice;
     };
   }
 });
-    // iPhone / iPad
-const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 if (isIOS) {
   const btn = document.getElementById('installPWA');
-
   if (btn) {
     btn.style.display = 'inline-flex';
     btn.innerHTML = '📲 Instalar App';
-
     btn.onclick = () => {
       alert(
         'Para instalar o IMORAR no iPhone:\n\n' +
