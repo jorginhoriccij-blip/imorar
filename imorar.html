@@ -720,6 +720,26 @@ window.addEventListener('beforeinstallprompt', (e) => {
     };
   }
 });
+    // iPhone / iPad
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+if (isIOS) {
+  const btn = document.getElementById('installPWA');
+
+  if (btn) {
+    btn.style.display = 'inline-flex';
+    btn.innerHTML = '📲 Instalar App';
+
+    btn.onclick = () => {
+      alert(
+        'Para instalar o IMORAR no iPhone:\n\n' +
+        '1. Toque no botão Compartilhar\n' +
+        '2. Escolha "Adicionar à Tela de Início"\n' +
+        '3. Toque em Adicionar'
+      );
+    };
+  }
+}
 </script>
 </body>
 </html>
