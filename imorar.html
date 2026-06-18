@@ -156,7 +156,7 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
       <input type="tel" id="cadWhatsApp" placeholder="WhatsApp com DDD (ex: 5512999999999)">
       <input type="password" id="cadSenha" placeholder="Criar senha (mín. 6 caracteres)" onkeydown="if(event.key==='Enter')cadastrar()">
       <button class="btn btn-primary" style="width:100%" onclick="cadastrar()">Criar conta grátis</button>
-      <div class="modal-note">3 dias grátis • sem cartão de crédito</div>
+      <div class="modal-note">7 dias grátis • sem cartão de crédito</div>
     </div>
   </div>
 </div>
@@ -608,12 +608,20 @@ async function cadastrar() {
   try {
     const cred = await auth.createUserWithEmailAndPassword(email, senha)
     await cred.user.updateProfile({ displayName: nome })
-    await db.collection('users').doc(cred.user.uid).set({
-      plan: 'starter',
-      nome,
-      email,
-      whatsapp: whatsapp || ''
-    })
+    const exp = new Date()
+exp.setDate(exp.getDate() + 7)
+
+await db.collection('users').doc(cred.user.uid).set({
+  uid: cred.user.uid,
+  nome,
+  email,
+  whatsapp: whatsapp || '',
+  plan: 'starter',
+  limiteImoveis: 1,
+  planoAtivo: true,
+  dataExpiracao: firebase.firestore.Timestamp.fromDate(exp),
+  criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+})
     closeModal()
     showToast('Conta criada! Bem-vindo, ' + nome + ' 🎉')
   } catch(e) {
