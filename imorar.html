@@ -439,10 +439,12 @@ textarea{min-height:160px;resize:vertical;margin-bottom:18px}
 // ─────────────────────────────────────────────────────
 
 const FIREBASE_CONFIG = {
-  apiKey:        "AIzaSyAPRe8ZR7UZxpF80pq44CSc6ViFl3_baH8",
-  authDomain:    "imobconnect-eecb2.firebaseapp.com",
-  projectId:     "imobconnect-eecb2",
-  storageBucket: "imobconnect-eecb2.firebasestorage.app"
+  apiKey:            "AIzaSyAPRe8ZR7UZxpF80pq44CSc6ViFl3_baH8",
+  authDomain:        "imobconnect-eecb2.firebaseapp.com",
+  projectId:         "imobconnect-eecb2",
+  storageBucket:     "imobconnect-eecb2.firebasestorage.app",
+  messagingSenderId: "91533892074",
+  appId:             "1:91533892074:web:e05dff8140742a43b47a93"
 }
 const WHATSAPP = '5512992442636'
 const LINKS_PAGAMENTO = {
@@ -459,6 +461,13 @@ const auth           = firebase.auth()
 const db             = firebase.firestore()
 const storage        = firebase.storage()
 const googleProvider = new firebase.auth.GoogleAuthProvider()
+
+// Captura resultado do redirect do Google Sign-In
+auth.getRedirectResult().then(result => {
+  if (result && result.user) closeModal()
+}).catch(e => {
+  if (e.code !== 'auth/no-current-user') showToast('Erro Google: ' + e.message)
+})
 
 let currentUser  = null
 let userData     = null
@@ -819,8 +828,7 @@ async function cadastrar() {
 
 async function loginGoogle() {
   try {
-    await auth.signInWithPopup(googleProvider)
-    closeModal()
+    await auth.signInWithRedirect(googleProvider)
   } catch(e) { showToast('Erro Google: ' + e.message) }
 }
 
