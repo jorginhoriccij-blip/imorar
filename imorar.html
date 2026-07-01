@@ -791,7 +791,7 @@ async function fazerLogin() {
     await auth.signInWithEmailAndPassword(email, senha)
     closeModal()
   } catch(e) {
-    const msgs = { 'auth/user-not-found':'Usuário não encontrado','auth/wrong-password':'Senha incorreta','auth/invalid-credential':'E-mail ou senha incorretos','auth/too-many-requests':'Muitas tentativas. Aguarde.' }
+    const msgs = { 'auth/user-not-found':'Usuário não encontrado','auth/wrong-password':'Senha incorreta','auth/invalid-credential':'E-mail ou senha incorretos','auth/invalid-login-credentials':'E-mail ou senha incorretos','auth/too-many-requests':'Muitas tentativas. Aguarde.','auth/invalid-email':'E-mail inválido' }
     showToast(msgs[e.code] || e.message)
   }
 }
